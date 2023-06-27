@@ -1,6 +1,30 @@
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+import enum
+import config
 
 app = Flask(__name__)
+
+db = SQLAlchemy(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = config.SQLALCHEMY_DB_URI
+
+class Status(enum.Enum):
+    DONE = 'DONE'
+    UNDONE = 'UNDONE'
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(20), unique=True, nullable=False)
+    password = db.Column(db.Enum(Status), nullable=False)
+    tasks = db.relationship('Task', backref='user')
+
+class Task(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.Text, nullable=False)
+    desc = db.Column(db.Text, nullable=False)
+    status = db.Column(db.Text, nullable=False)
+    start_date = db.Column(db.DateTime, nullable=False)
+    end_date = db.Column(db.DateTime, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 def add_task():
     pass

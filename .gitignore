@@ -162,4 +162,4 @@ cython_debug/
 *.txt
 
 # Config Files
-api/config.py
+config.py
