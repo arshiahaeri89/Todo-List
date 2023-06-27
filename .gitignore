@@ -157,3 +157,6 @@ cython_debug/
 
 # GIMP files
 *.xcf
+
+# Notes
+*.txt
