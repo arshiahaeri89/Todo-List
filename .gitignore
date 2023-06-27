@@ -159,7 +159,7 @@ cython_debug/
 *.xcf
 
 # Notes
-*.txt
+*/notes.txt
 
 # Config Files
 config.py
