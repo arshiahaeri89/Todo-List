@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import enum
 import config
@@ -11,6 +11,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = config.SQLALCHEMY_DB_URI
 class Status(enum.Enum):
     DONE = 'DONE'
     UNDONE = 'UNDONE'
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
@@ -32,8 +33,29 @@ with app.app_context():
 def add_task():
     pass
 
+@app.route('/get_tasks', methods=['POST'])
 def get_tasks():
-    pass
+    username = request.form['username'] # TODO: in error handling handle this with key_error
+    user = User.query.filter_by(username=username)
+    tasks_list = []
+    for task in user.tasks:
+        task_dict = {
+            'task_title': task.title,
+            'task_desc': task.desc,
+            'task_status': task.status,
+            'task_start_date': task.start_date,
+            'task_end_date': task.end_date
+        }
+        
+        tasks_list.append(task_dict)
+    
+    data = {
+        'status': 'ok',
+        'tasks': tasks_list
+    }
+
+    return jsonify(data)
+
 
 def edit_task():
     pass
