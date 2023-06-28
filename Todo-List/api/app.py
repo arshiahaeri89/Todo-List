@@ -63,5 +63,20 @@ def edit_task():
 def remove_task():
     pass
 
+@app.route('/register', methods=['POST'])
+def register():
+    username = request.form['username']
+    password = request.form['password']
+    user = User(username=username, password=password)
+    db.session.add(user)
+    db.commit()
+
+    data = {
+        'status': 'ok'
+    }
+
+    return jsonify(data)
+
+
 if __name__ == '__main__':
     app.run()
