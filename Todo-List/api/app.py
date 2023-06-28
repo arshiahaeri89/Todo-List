@@ -26,6 +26,9 @@ class Task(db.Model):
     end_date = db.Column(db.DateTime, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
+with app.app_context():
+    db.create_all()
+
 def add_task():
     pass
 
