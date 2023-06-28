@@ -167,3 +167,7 @@ test.txt
 
 # Config Files
 config.py
+
+# DataBase
+*.db
+*.sqlite

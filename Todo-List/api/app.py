@@ -4,9 +4,9 @@ import enum
 import config
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = config.SQLALCHEMY_DB_URI
 
 db = SQLAlchemy(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = config.SQLALCHEMY_DB_URI
 
 class Status(enum.Enum):
     DONE = 'DONE'
@@ -79,4 +79,4 @@ def register():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run('0.0.0.0', 5000, debug=True)
