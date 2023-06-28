@@ -160,6 +160,7 @@ cython_debug/
 
 # Notes
 */notes.txt
+test.txt
 
 # Config Files
 config.py
