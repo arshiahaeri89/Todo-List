@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 import enum
 import config
@@ -15,7 +15,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     password = db.Column(db.Enum(Status), nullable=False)
-    tasks = db.relationship('Task', backref='user')
+    tasks = db.relationship('Task', backref='user_id')
 
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
