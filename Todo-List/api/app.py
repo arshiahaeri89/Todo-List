@@ -37,22 +37,27 @@ def add_task():
 def get_tasks():
     username = request.form['username'] # TODO: in error handling handle this with key_error
     user = User.query.filter_by(username=username)
-    tasks_list = []
-    for task in user.tasks:
-        task_dict = {
-            'task_title': task.title,
-            'task_desc': task.desc,
-            'task_status': task.status,
-            'task_start_date': task.start_date,
-            'task_end_date': task.end_date
-        }
+    if user:
+        tasks_list = []
+        for task in user.tasks:
+            task_dict = {
+                'task_title': task.title,
+                'task_desc': task.desc,
+                'task_status': task.status,
+                'task_start_date': task.start_date,
+                'task_end_date': task.end_date
+            }
+            
+            tasks_list.append(task_dict)
         
-        tasks_list.append(task_dict)
-    
-    data = {
-        'status': 'ok',
-        'tasks': tasks_list
-    }
+        data = {
+            'status': 'ok',
+            'tasks': tasks_list
+        }
+    else:
+        data = {
+            'status': 'not found'
+        }
 
     return jsonify(data)
 
