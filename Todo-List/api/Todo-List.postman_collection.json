@@ -231,6 +231,39 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "api-remove-task",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "task_id",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/tasks/remove",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"tasks",
+						"remove"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

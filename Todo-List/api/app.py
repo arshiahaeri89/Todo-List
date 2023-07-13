@@ -131,8 +131,23 @@ def edit_task():
         }
     return data
 
+@app.route('/tasks/remove', methods=['POST'])
 def remove_task():
-    pass
+    task_id = request.form['task_id'] # TODO: in error handling handle this with key_error
+
+    task = Task.query.get(task_id)
+    if task:
+        db.session.delete(task)
+        db.session.commit()
+
+        data = {
+            'status': 'ok'
+        }
+    else:
+        data = {
+            'status': 'not found'
+        }
+    return data
 
 @app.route('/account/register', methods=['POST'])
 def register():
