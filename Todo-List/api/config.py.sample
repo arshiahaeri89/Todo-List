@@ -2,3 +2,6 @@
 import os
 DB_PATH = os.path.join(os.path.dirname(__file__), 'app.db')
 SQLALCHEMY_DB_URI = f'sqlite:///{DB_PATH}'
+
+# App Configs
+DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
