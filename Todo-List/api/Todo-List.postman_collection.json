@@ -22,7 +22,7 @@
 					]
 				},
 				"url": {
-					"raw": "http://127.0.0.1:5000/get_tasks",
+					"raw": "http://127.0.0.1:5000/q/tasks/",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -32,7 +32,9 @@
 					],
 					"port": "5000",
 					"path": [
-						"get_tasks"
+						"q",
+						"tasks",
+						""
 					]
 				}
 			},
@@ -59,7 +61,7 @@
 					]
 				},
 				"url": {
-					"raw": "http://127.0.0.1:5000/register",
+					"raw": "http://127.0.0.1:5000/account/register",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -69,7 +71,104 @@
 					],
 					"port": "5000",
 					"path": [
+						"account",
 						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api-login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "arshia",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "arshia",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/account/login",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"account",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api-add-task",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "task_title",
+							"value": "test",
+							"type": "text"
+						},
+						{
+							"key": "task_desc",
+							"value": "test test",
+							"type": "text"
+						},
+						{
+							"key": "task_status",
+							"value": "UNDONE",
+							"type": "text"
+						},
+						{
+							"key": "task_start_date",
+							"value": "2022-2-5 00:00:00",
+							"type": "text"
+						},
+						{
+							"key": "task_end_date",
+							"value": "2022-3-5 00:00:00",
+							"type": "text"
+						},
+						{
+							"key": "user_id",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/tasks/add",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"tasks",
+						"add"
 					]
 				}
 			},
