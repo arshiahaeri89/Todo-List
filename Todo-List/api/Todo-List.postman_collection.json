@@ -173,6 +173,64 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "api-edit-task",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "task_title",
+							"value": "test",
+							"type": "text"
+						},
+						{
+							"key": "task_desc",
+							"value": "test test",
+							"type": "text"
+						},
+						{
+							"key": "task_status",
+							"value": "DONE",
+							"type": "text"
+						},
+						{
+							"key": "task_start_date",
+							"value": "2022-2-5 00:00:00",
+							"type": "text"
+						},
+						{
+							"key": "task_end_date",
+							"value": "2022-3-5 00:00:00",
+							"type": "text"
+						},
+						{
+							"key": "task_id",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/tasks/edit",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"tasks",
+						"edit"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

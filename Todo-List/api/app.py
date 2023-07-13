@@ -97,8 +97,39 @@ def get_tasks():
     return jsonify(data)
 
 
+@app.route('/tasks/edit', methods=['POST'])
 def edit_task():
-    pass
+    title = request.form['task_title'] # TODO: in error handling handle this with key_error
+    desc = request.form['task_desc']
+    status = request.form['task_status']
+    start_date = request.form['task_start_date']
+    end_date = request.form['task_end_date']
+    task_id = request.form['task_id']
+
+    task = Task.query.get(task_id)
+    if task:
+        start_date_datetime = datetime.datetime.strptime(
+            start_date, config.DATETIME_FORMAT)
+        
+        end_date_datetime = datetime.datetime.strptime(
+            end_date, config.DATETIME_FORMAT)
+        
+        task.title = title
+        task.desc = desc
+        task.status = status
+        task.start_date = start_date_datetime
+        task.end_date = end_date_datetime
+        
+        db.session.commit()
+
+        data = {
+            'status': 'ok'
+        }
+    else:
+        data = {
+            'status': 'not found'
+        }
+    return data
 
 def remove_task():
     pass
