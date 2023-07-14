@@ -1,0 +1,73 @@
+{% extends "template.html"%}
+
+{% block content %}
+  
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="bs-callout bs-callout-info">
+        {% for message in messages %}
+          <h5>{{ message }}</h5>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+<div class="row">
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Todo List</h3>
+        </div>
+        <div class="panel-body">
+          <p>
+          برای باز کردن اکانت
+          <a href="/account/register">به صفحه رجیستر شدن سر بزنید</a>
+          و برای اطلاعات بیشتر به
+          <a href="https://github.com/arshiahaeri89/Todo-List">
+            گیت هاب پروژه
+          </a>
+          مراجعه کنید
+          </p>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block footer %}
+
+<script >
+$(document).ready(function () {
+        $(".subtaskinput").fadeOut(0);
+        $('.fa-square-o').hover(function () {
+            $(this).addClass('fa-check-square-o');
+            $(this).removeClass('fa-square-o');
+        }, function () {
+            $(this).addClass('fa-square-o');
+            $(this).removeClass('fa-check-square-o');
+        });
+
+});
+
+function showsubtaskinput(elementid){
+  if ($('.btn-'+elementid).text() == '+') {
+    $('.subtask-'+elementid).fadeIn(250);
+    $('.subtask-'+elementid).focus();
+    $('.btn-'+elementid).text ('-');
+  }
+  else {
+    $('.subtask-'+elementid).fadeOut(250);
+    $('.btn-'+elementid).text ('+');
+  }
+  // دگمه رو عوض کنیم به منفی و اگر منفی رو زد المنت رو حذف کنیم
+  return 0;
+}
+</script>
+
+<script type="text/javascript">
+$(".alert").fadeTo(10000, 500).slideUp(500, function(){
+    $(".alert").slideUp(10000);
+});
+</script>
+{% endblock %}
