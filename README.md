@@ -2,6 +2,6 @@
 
 ## TODO
 
-- [ ] Do some more error handling
+- [x] Do some more error handling
 - [ ] Add Token authentication
-- [ ] in client side, check end date was bigger than start date
+- [ ] in client side, check end date was bigger or equal than start date
