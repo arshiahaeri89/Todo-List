@@ -1,0 +1,30 @@
+<ion-header [translucent]="true" class="center">
+  <ion-toolbar>
+    <ion-title>
+      تنظیمات
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>ورود به سیستم</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <form>
+        <ion-input type="text" label="نام کاربری" labelPlacement="floating"></ion-input>
+        <ion-input type="password" label="رمز عبور" labelPlacement="floating"></ion-input>
+        <ion-button type="submit">ورود</ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      <ion-button expand="block" color="danger">خروج</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
