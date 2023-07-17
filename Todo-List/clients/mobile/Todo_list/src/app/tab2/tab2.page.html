@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" class="center">
   <ion-toolbar>
     <ion-title>
       کارهای در جریان
@@ -7,5 +7,64 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  Content Here
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>کار جدید</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <form>
+        <ion-input type="text" label="عنوان" labelPlacement="floating"></ion-input>
+        <ion-input type="text" label="توضیحات" labelPlacement="floating"></ion-input>
+
+        <ion-input value="val | تاریخ شروع" id="date"></ion-input> <!-- TODO: fix this -->
+        <ion-popover trigger="date" >
+            <ng-template>
+                <ion-datetime presentation="date" locale="en-US"></ion-datetime>
+            </ng-template>
+        </ion-popover>
+
+        <ion-input value="val | تاریخ پایان" id="date"></ion-input> <!-- TODO: fix this -->
+        <ion-popover trigger="date" >
+            <ng-template>
+                <ion-datetime presentation="date" locale="en-US"></ion-datetime>
+            </ng-template>
+        </ion-popover>
+
+        <ion-button type="submit">ذخیره</ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>کارهای انجام نشده</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-item-sliding>
+            <ion-item-options side="start">
+              <ion-item-option color="warning">
+                <ion-icon slot="start" name="build-outline"></ion-icon>
+                ویرایش
+              </ion-item-option>
+            </ion-item-options>
+        
+            <ion-item>
+              <ion-label class="center">undoneTasks</ion-label>
+            </ion-item>
+        
+            <ion-item-options>
+              <ion-item-option color="danger">
+                <ion-icon slot="start" name="trash"></ion-icon>
+                حذف
+              </ion-item-option>
+            </ion-item-options>
+        </ion-item-sliding>
+        </ion-item>  
+      </ion-list>  
+    </ion-card-content>
+  </ion-card>
 </ion-content>
