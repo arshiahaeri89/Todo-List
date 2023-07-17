@@ -208,6 +208,38 @@ def remove_task():
         }
     return jsonify(data)
 
+
+@app.route('/q/stats', methods=['POST'])
+def general_stats():
+    try:
+        token = request.form['token']
+        user = User.query.filter_by(token=token).first()
+        if user:
+            tasks = Task.query.all()
+            undone_tasks = 0
+            done_tasks = 0
+            for task in tasks:
+                if task.status.name == 'UNDONE':
+                    undone_tasks += 1
+                elif task.status.name == 'DONE':
+                    done_tasks += 1
+            data = {
+                'status': 'ok',
+                'undone_tasks': undone_tasks,
+                'done_tasks': done_tasks
+            }
+        else:
+            data = {
+                'status': 'not found'
+            }
+    except Exception as err:
+        data = {
+            'status': 'error',
+            'exception': str(err)
+        }
+    return jsonify(data)
+
+
 @app.route('/account/register', methods=['GET', 'POST'])
 def register():
     """ Registering page and process """
