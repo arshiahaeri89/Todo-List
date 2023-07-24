@@ -5,12 +5,14 @@ import string
 
 from flask import Flask, request, jsonify, render_template, flash
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 
 import config
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = config.SQLALCHEMY_DB_URI
 app.config['SECRET_KEY'] = config.SECRET_KEY
+cors = CORS(app)
 
 db = SQLAlchemy(app)
 
