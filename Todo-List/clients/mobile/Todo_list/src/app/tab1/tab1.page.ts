@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { Generalstats } from '../generalstats';
 
 @Component({
   selector: 'app-tab1',
@@ -26,14 +27,13 @@ export class Tab1Page {
     }
 
     get_stats() {
-        this.http.post(this.url,
-            JSON.stringify({
-                token: this.token
-            }), {headers : new HttpHeaders({ 'Content-Type': 'application/json' })})
+        const formdata = new FormData()
+        formdata.append('token', this.token)
+        
+        this.http.post<Generalstats>(this.url, formdata, {})
             .subscribe(response => {
-                // this.doneTasks = response.data.done_tasks
-                // this.undoneTasks = response.data.undone_tasks
-                console.log(response)
+                this.doneTasks = response.done_tasks
+                this.undoneTasks = response.undone_tasks
             }, error => {
                 console.log("Error: " + error.message);
             });
