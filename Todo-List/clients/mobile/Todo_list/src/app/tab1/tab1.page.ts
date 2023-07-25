@@ -16,10 +16,10 @@ export class Tab1Page {
   
 
     constructor(private http: HttpClient) {
-        this.token = "LYdEGncuJzDXcwHQvEQpLlXU6XIoaTshVUhbprmI7IWv6lvd"
-        this.url = "http://127.0.0.1:5000" + "/q/stats" //TODO: Get Base URL from Parent
-        this.doneTasks = 0
-        this.undoneTasks = 0
+        this.token = "LYdEGncuJzDXcwHQvEQpLlXU6XIoaTshVUhbprmI7IWv6lvd";
+        this.url = "http://127.0.0.1:5000" + "/q/stats"; //TODO: Get Base URL from Parent
+        this.doneTasks = 0;
+        this.undoneTasks = 0;
     }
 
     ionViewDidEnter() {
@@ -27,15 +27,15 @@ export class Tab1Page {
     }
 
     get_stats() {
-        const formdata = new FormData()
-        formdata.append('token', this.token)
+        const formdata = new FormData();
+        formdata.append('token', this.token);
         
         this.http.post<Generalstats>(this.url, formdata, {})
             .subscribe(response => {
-                this.doneTasks = response.done_tasks
-                this.undoneTasks = response.undone_tasks
+                this.doneTasks = response.done_tasks;
+                this.undoneTasks = response.undone_tasks;
             }, error => {
-                console.log("Error: " + error.message);
+                console.log("Error: " + error.message); // TODO: toast
             });
     }
 

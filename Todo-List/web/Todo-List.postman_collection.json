@@ -15,19 +15,8 @@
 					"mode": "formdata",
 					"formdata": [
 						{
-							"key": "username",
-							"value": "arshia",
-							"type": "text"
-						},
-						{
 							"key": "token",
 							"value": "LYdEGncuJzDXcwHQvEQpLlXU6XIoaTshVUhbprmI7IWv6lvd",
-							"type": "text",
-							"disabled": true
-						},
-						{
-							"key": "token",
-							"value": " TqSz2nijF4aw1HO3VPimseto2Q2m1bUEzhdyVO6j9Ng561HX",
 							"type": "text"
 						}
 					]
@@ -281,6 +270,39 @@
 					"path": [
 						"tasks",
 						"remove"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api-general-stats",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "token",
+							"value": "LYdEGncuJzDXcwHQvEQpLlXU6XIoaTshVUhbprmI7IWv6lvd",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/q/stats",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"q",
+						"stats"
 					]
 				}
 			},

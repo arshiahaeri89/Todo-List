@@ -103,8 +103,7 @@ def get_tasks():
     """ This function returns all of a user tasks """
     try:
         token = request.form['token']
-        username = request.form['username']
-        user = User.query.filter_by(username=username, token=token).first()
+        user = User.query.filter_by(token=token).first()
         if user:
             user_tasks = Task.query.filter_by(user_id=user.id)
             tasks_list = []
