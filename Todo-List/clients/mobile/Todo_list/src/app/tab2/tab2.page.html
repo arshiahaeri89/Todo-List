@@ -17,17 +17,17 @@
         <ion-input type="text" label="عنوان" labelPlacement="floating" name="title"></ion-input>
         <ion-input type="text" label="توضیحات" labelPlacement="floating" name="description"></ion-input>
 
-        <ion-input value="{{ form.startDate }}" id="start-date" name="startDate" placeholder="تاریخ شروع"></ion-input> <!-- TODO: fix this -->
+        <ion-input value="{{ form.value.startDate }}" id="start-date" label="تاریخ شروع"></ion-input> <!-- TODO: fix this -->
         <ion-popover trigger="start-date" >
             <ng-template>
-                <ion-datetime presentation="date" locale="en-US"></ion-datetime>
+              <ion-datetime name="startDate" presentation="date" locale="en-US" [showDefaultButtons]="true" [(ngModel)]="form.value.startDate"></ion-datetime>
             </ng-template>
         </ion-popover>
 
-        <ion-input value="{{ form.endDate }}" id="end-date" name="endDate" placeholder="تاریخ پایان"></ion-input> <!-- TODO: fix this -->
+        <ion-input value="{{ form.value.endDate }}" id="end-date" label="تاریخ پایان"></ion-input> <!-- TODO: fix this -->
         <ion-popover trigger="end-date" >
             <ng-template>
-                <ion-datetime presentation="date" locale="en-US"></ion-datetime>
+                <ion-datetime name="endDate" presentation="date" locale="en-US" [showDefaultButtons]="true" [(ngModel)]="form.value.endDate"></ion-datetime>
             </ng-template>
         </ion-popover>
 

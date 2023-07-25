@@ -35,8 +35,8 @@ export class Tab2Page {
     const formdata = new FormData();
     formdata.append('task_title', <string>this.form.value.title);
     formdata.append('task_desc', <string>this.form.value.description);
-    formdata.append('task_start_date', <string>this.form.value.startDate);
-    formdata.append('task_end_date', <string>this.form.value.endDate);
+    formdata.append('task_start_date', (<string>this.form.value.startDate).split('T')[0] + ' ' + (<string>this.form.value.startDate).split('T')[1]);
+    formdata.append('task_end_date', (<string>this.form.value.endDate).split('T')[0] + ' ' + (<string>this.form.value.endDate).split('T')[1]);
     formdata.append('task_status', 'UNDONE');
     formdata.append('token', this.token);
 
