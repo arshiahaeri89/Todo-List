@@ -13,19 +13,19 @@
     </ion-card-header>
   
     <ion-card-content>
-      <form>
-        <ion-input type="text" label="عنوان" labelPlacement="floating"></ion-input>
-        <ion-input type="text" label="توضیحات" labelPlacement="floating"></ion-input>
+      <form (ngSubmit)="onSubmit()">
+        <ion-input type="text" label="عنوان" labelPlacement="floating" name="title"></ion-input>
+        <ion-input type="text" label="توضیحات" labelPlacement="floating" name="description"></ion-input>
 
-        <ion-input value="val | تاریخ شروع" id="date"></ion-input> <!-- TODO: fix this -->
-        <ion-popover trigger="date" >
+        <ion-input value="{{ form.startDate }}" id="start-date" name="startDate" placeholder="تاریخ شروع"></ion-input> <!-- TODO: fix this -->
+        <ion-popover trigger="start-date" >
             <ng-template>
                 <ion-datetime presentation="date" locale="en-US"></ion-datetime>
             </ng-template>
         </ion-popover>
 
-        <ion-input value="val | تاریخ پایان" id="date"></ion-input> <!-- TODO: fix this -->
-        <ion-popover trigger="date" >
+        <ion-input value="{{ form.endDate }}" id="end-date" name="endDate" placeholder="تاریخ پایان"></ion-input> <!-- TODO: fix this -->
+        <ion-popover trigger="end-date" >
             <ng-template>
                 <ion-datetime presentation="date" locale="en-US"></ion-datetime>
             </ng-template>
@@ -43,7 +43,7 @@
 
     <ion-card-content>
       <ion-list>
-        <ion-item>
+        <ion-item *ngFor="let task of undoneTasks">
           <ion-item-sliding>
             <ion-item-options side="start">
               <ion-item-option color="warning">
@@ -53,7 +53,7 @@
             </ion-item-options>
         
             <ion-item>
-              <ion-label class="center">undoneTasks</ion-label>
+              <ion-label class="center">{{ task.task_title + ' ' + task.task_start_date + ' - ' + task.task_end_date }}</ion-label>
             </ion-item>
         
             <ion-item-options>
@@ -62,8 +62,8 @@
                 حذف
               </ion-item-option>
             </ion-item-options>
-        </ion-item-sliding>
-        </ion-item>  
+          </ion-item-sliding>
+        </ion-item>
       </ion-list>  
     </ion-card-content>
   </ion-card>
