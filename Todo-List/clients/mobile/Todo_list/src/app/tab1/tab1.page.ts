@@ -32,8 +32,6 @@ export class Tab1Page {
         
         this.http.post<Generalstats>(this.url, formdata, {})
             .subscribe(response => {
-                console.log(response);
-                
                 this.doneTasks = response.done_tasks;
                 this.undoneTasks = response.undone_tasks;
             }, error => {
