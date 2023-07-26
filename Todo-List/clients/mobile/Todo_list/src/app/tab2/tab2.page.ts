@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { TaskResponse } from '../task-response'
 
 @Component({
@@ -20,10 +20,10 @@ export class Tab2Page {
     this.url = "http://127.0.0.1:5000" + "/q/tasks" //TODO: Get Base URL from Parent
     this.undoneTasks = [];
     this.form = this.formbuilder.group({
-      title: '',
-      description: '',
-      startDate: '',
-      endDate: ''
+      title: ['', Validators.compose([Validators.required])],
+      description: ['', Validators.compose([Validators.required])],
+      startDate: ['', Validators.compose([Validators.required])],
+      endDate: ['', Validators.compose([Validators.required])]
     });
   }
 

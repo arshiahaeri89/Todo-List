@@ -11,3 +11,5 @@
 - [x] Vazir font
 - [ ] better response codes for web server
 - [ ] linking
+- [ ] required field for forms
+- [ ] fix page2 later
