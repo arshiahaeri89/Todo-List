@@ -17,7 +17,7 @@ export class Tab2Page {
   
   constructor(private http: HttpClient, private formbuilder: FormBuilder) {
     this.token = "LYdEGncuJzDXcwHQvEQpLlXU6XIoaTshVUhbprmI7IWv6lvd";
-    this.url = "http://127.0.0.1:5000" + "/q/tasks" //TODO: Get Base URL from Parent
+    this.url = "http://127.0.0.1:5000" + "/q/tasks"; //TODO: Get Base URL from Parent
     this.undoneTasks = [];
     this.form = this.formbuilder.group({
       title: ['', Validators.compose([Validators.required])],
