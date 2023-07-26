@@ -53,7 +53,7 @@ export class Tab2Page {
     formdata.append('token', this.token);
     
     this.http.post<TaskResponse>(this.url, formdata, {})
-        .subscribe(response => {           
+        .subscribe(response => {
             response.tasks.forEach((task) => {
               if (task.task_status === "UNDONE") {
                 this.undoneTasks.push(task);
