@@ -18,7 +18,7 @@ export class Tab2Page {
   
   constructor(private http: HttpClient, private formbuilder: FormBuilder, private storage: StorageService) {
     this.token = "";
-    this.url = "http://127.0.0.1:5000" + "/q/tasks"; //TODO: Get Base URL from Parent
+    this.url = "";
     this.undoneTasks = [];
     this.form = this.formbuilder.group({
       title: ['', Validators.compose([Validators.required])],
@@ -29,6 +29,7 @@ export class Tab2Page {
   }
 
   async ionViewDidEnter() {
+    this.url = await this.storage.get("baseURL") + "/q/tasks";
     this.token = await this.storage.get('token');
     this.get_undone_tasks();
   }

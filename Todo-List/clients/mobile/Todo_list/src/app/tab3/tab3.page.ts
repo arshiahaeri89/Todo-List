@@ -16,11 +16,12 @@ export class Tab3Page {
 
   constructor(private http: HttpClient, private storage: StorageService) {
     this.token = "";
-    this.url = "http://127.0.0.1:5000" + "/q/tasks" //TODO: Get Base URL from Parent
+    this.url = "";
     this.doneTasks = [];
   }
 
   async ionViewDidEnter() {
+    this.url = await this.storage.get("baseURL") + "/q/tasks";
     this.token = await this.storage.get('token');
     this.get_done_tasks()
   }

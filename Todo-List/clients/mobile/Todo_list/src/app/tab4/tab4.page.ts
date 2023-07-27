@@ -14,11 +14,11 @@ export class Tab4Page  {
   public form;
   private url: string;
   public loggedIn: boolean;
-  public token: string; //TODO: Token System
+  public token: string;
 
   constructor(private http: HttpClient, private formbuilder: FormBuilder, private storage: StorageService) {
     this.token = "";
-    this.url = "http://127.0.0.1:5000" + "/account/login"; //TODO: Get Base URL from Parent
+    this.url = "";
     this.loggedIn = false
     this.form = this.formbuilder.group({
       username: ['', Validators.compose([Validators.required])],
@@ -27,6 +27,7 @@ export class Tab4Page  {
   }
 
   async ionViewDidEnter() {
+    this.url = await this.storage.get("baseURL") + "/account/login";
     this.token = await this.storage.get('token');
     this.loggedIn = !(this.token == undefined || this.token == null || this.token == "");
   }

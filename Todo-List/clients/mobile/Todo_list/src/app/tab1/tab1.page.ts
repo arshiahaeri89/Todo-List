@@ -18,13 +18,14 @@ export class Tab1Page {
 
     constructor(private http: HttpClient, private storage: StorageService) {
         this.token = "";
-        this.url = "http://127.0.0.1:5000" + "/q/stats"; //TODO: Get Base URL from Parent
+        this.url = "";
         this.doneTasks = 0;
         this.undoneTasks = 0;
     }
 
     async ionViewDidEnter() {
-        this.token = await this.storage.get('token');
+        this.url = await this.storage.get("baseURL") + "/q/stats";
+        this.token = await this.storage.get("token");
         this.get_stats();
     }
 
