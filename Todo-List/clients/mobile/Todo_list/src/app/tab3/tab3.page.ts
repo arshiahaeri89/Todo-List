@@ -31,8 +31,21 @@ export class Tab3Page {
     this.getDoneTasks()
   }
 
-  setTaskStatus(taskId: number) {
-    console.log('setTaskStatus ' + taskId); // TODO: Write this
+  async setTaskStatus(taskId: number) {
+    let url = await this.storage.get('baseURL') + '/tasks/status'
+    
+    const formdata = new FormData();
+    formdata.append('task_id', taskId.toString())
+    formdata.append('task_status', 'UNDONE')
+    formdata.append('token', this.token)
+
+    this.http.post<object>(url, formdata, {})
+        .subscribe(response => {
+          console.log("Status edited Successfully."); // TODO: toast
+          this.updateTasks()
+        }, error => {
+           console.log("Error: " + error.message); // TODO: toast
+        });
   }
 
   async removeTask(taskId: number) {

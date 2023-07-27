@@ -225,6 +225,43 @@ def general_stats():
         
         return jsonify(data), 500
 
+@app.route('/tasks/status', methods=['POST'])
+def setTaskStatus():
+    try:
+        token = request.form['token']
+        task_id = request.form['task_id']
+        task_status = request.form['task_status']
+        user = User.query.filter_by(token=token).first()
+        if user:
+            task = Task.query.get(int(task_id))
+            if task:
+                task.status = task_status
+                db.session.commit()
+
+                data = {
+                    'status': 'ok'
+                }
+
+                return jsonify(data), 200
+            else:
+                data = {
+                    'status': 'not found'
+                }
+
+                return jsonify(data), 404
+        else:
+            data = {
+                'status': 'not found'
+            }
+
+            return jsonify(data), 404
+    except Exception as err:
+        data = {
+            'status': 'error',
+            'exception': str(err)
+        }
+        
+        return jsonify(data), 500
 
 @app.route('/account/register', methods=['GET', 'POST'])
 def register():
