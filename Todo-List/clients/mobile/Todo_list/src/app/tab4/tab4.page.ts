@@ -33,7 +33,6 @@ export class Tab4Page  {
 
   login() {
     const formdata = new FormData();
-    console.log(<string>this.form.value.username);
     formdata.append('username', <string>this.form.value.username);
     formdata.append('password', <string>this.form.value.password);
 

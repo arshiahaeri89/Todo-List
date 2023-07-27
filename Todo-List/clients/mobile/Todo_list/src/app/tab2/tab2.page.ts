@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { TaskResponse } from '../task-response'
+import { StorageService } from '../storage-service.service';
 
 @Component({
   selector: 'app-tab2',
@@ -15,8 +16,8 @@ export class Tab2Page {
   public undoneTasks: Array<any>;
   public token: string; //TODO: Token System 
   
-  constructor(private http: HttpClient, private formbuilder: FormBuilder) {
-    this.token = "LYdEGncuJzDXcwHQvEQpLlXU6XIoaTshVUhbprmI7IWv6lvd";
+  constructor(private http: HttpClient, private formbuilder: FormBuilder, private storage: StorageService) {
+    this.token = "";
     this.url = "http://127.0.0.1:5000" + "/q/tasks"; //TODO: Get Base URL from Parent
     this.undoneTasks = [];
     this.form = this.formbuilder.group({
@@ -27,7 +28,8 @@ export class Tab2Page {
     });
   }
 
-  ionViewDidEnter() {
+  async ionViewDidEnter() {
+    this.token = await this.storage.get('token');
     this.get_undone_tasks();
   }
 

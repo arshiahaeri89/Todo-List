@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Generalstats } from '../generalstats';
+import { StorageService } from '../storage-service.service';
 
 @Component({
   selector: 'app-tab1',
@@ -12,17 +13,18 @@ export class Tab1Page {
     private url: string;
     public doneTasks: number;
     public undoneTasks: number;
-    public token: string; //TODO: Token System
+    public token: string;
   
 
-    constructor(private http: HttpClient) {
-        this.token = "LYdEGncuJzDXcwHQvEQpLlXU6XIoaTshVUhbprmI7IWv6lvd";
+    constructor(private http: HttpClient, private storage: StorageService) {
+        this.token = "";
         this.url = "http://127.0.0.1:5000" + "/q/stats"; //TODO: Get Base URL from Parent
         this.doneTasks = 0;
         this.undoneTasks = 0;
     }
 
-    ionViewDidEnter() {
+    async ionViewDidEnter() {
+        this.token = await this.storage.get('token');
         this.get_stats();
     }
 

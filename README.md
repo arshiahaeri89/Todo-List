@@ -13,3 +13,4 @@
 - [ ] linking
 - [ ] required for forms
 - [ ] fix page2 later
+- [ ] hide tabs when user not logged in
