@@ -23,10 +23,35 @@ export class Tab3Page {
   async ionViewDidEnter() {
     this.url = await this.storage.get("baseURL") + "/q/tasks";
     this.token = await this.storage.get('token');
-    this.get_done_tasks()
+    this.updateTasks()
   }
 
-  get_done_tasks() {
+  updateTasks() {
+    this.doneTasks = []
+    this.getDoneTasks()
+  }
+
+  setTaskStatus(taskId: number) {
+    console.log('setTaskStatus ' + taskId);
+  }
+
+  async removeTask(taskId: number) {
+    let url = await this.storage.get('baseURL') + '/tasks/remove'
+    
+    const formdata = new FormData();
+    formdata.append('task_id', taskId.toString())
+    formdata.append('token', this.token)
+
+    this.http.post<object>(url, formdata, {})
+        .subscribe(response => {
+          console.log("Task removed Successfully."); // TODO: toast
+          this.updateTasks()
+        }, error => {
+           console.log("Error: " + error.message); // TODO: toast
+        });
+  }
+
+  getDoneTasks() {
     const formdata = new FormData();
     formdata.append('token', this.token);
     

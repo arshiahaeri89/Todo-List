@@ -159,7 +159,7 @@ def remove_task():
 
         user = User.query.filter_by(token=token)
         if user:
-            task = Task.query.get(task_id)
+            task = Task.query.get(int(task_id))
             if task:
                 db.session.delete(task)
                 db.session.commit()

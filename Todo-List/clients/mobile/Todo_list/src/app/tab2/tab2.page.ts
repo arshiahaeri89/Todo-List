@@ -29,10 +29,14 @@ export class Tab2Page {
   }
 
   async ionViewDidEnter() {
-    this.undoneTasks = []
     this.url = await this.storage.get("baseURL") + "/q/tasks";
     this.token = await this.storage.get('token');
-    this.get_undone_tasks();
+    this.updateTasks();
+  }
+
+  updateTasks() {
+    this.undoneTasks = [];
+    this.getUndoneTasks();
   }
 
   onSubmit() {
@@ -52,7 +56,7 @@ export class Tab2Page {
       });
   }
 
-  get_undone_tasks() {
+  getUndoneTasks() {
     const formdata = new FormData();
     formdata.append('token', this.token);
     
