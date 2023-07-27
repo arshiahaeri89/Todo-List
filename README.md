@@ -7,9 +7,9 @@
 - [ ] in client side, check end date was bigger or equal than start date
 - [x] Modularization
 - [x] set good icons for ionic tabs
-- [ ] Handle Showing the form and exit button when user logged in in config tab (tab 4)
+- [x] Handle Showing the form and exit button when user logged in
 - [x] Vazir font
-- [ ] better response codes for web server
+- [x] better response codes for web server
 - [ ] linking
-- [ ] required field for forms
+- [ ] required for forms
 - [ ] fix page2 later
