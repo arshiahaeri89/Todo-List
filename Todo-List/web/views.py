@@ -70,6 +70,7 @@ def get_tasks():
             tasks_list = []
             for task in user_tasks:
                 task_dict = {
+                    'task_id': task.id,
                     'task_title': task.title,
                     'task_desc': task.desc,
                     'task_status': task.status.name,
