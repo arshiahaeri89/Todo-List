@@ -10,7 +10,7 @@
 - [x] Handle Showing the form and exit button when user logged in
 - [x] Vazir font
 - [x] better response codes for web server
-- [ ] linking
+- [x] linking in tab1
 - [ ] required for forms
-- [ ] fix page2 later
+- [ ] fix page2 datetime
 - [ ] hide tabs when user not logged in
