@@ -29,6 +29,7 @@ export class Tab2Page {
   }
 
   async ionViewDidEnter() {
+    this.undoneTasks = []
     this.url = await this.storage.get("baseURL") + "/q/tasks";
     this.token = await this.storage.get('token');
     this.get_undone_tasks();
