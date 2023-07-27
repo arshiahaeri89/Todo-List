@@ -32,7 +32,7 @@ export class Tab3Page {
   }
 
   setTaskStatus(taskId: number) {
-    console.log('setTaskStatus ' + taskId);
+    console.log('setTaskStatus ' + taskId); // TODO: Write this
   }
 
   async removeTask(taskId: number) {

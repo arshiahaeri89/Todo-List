@@ -39,6 +39,26 @@ export class Tab2Page {
     this.getUndoneTasks();
   }
 
+  editTask(taskId: number) {
+    console.log('editTask ' + taskId); // TODO: Write this
+  }
+
+  async removeTask(taskId: number) {
+    let url = await this.storage.get('baseURL') + '/tasks/remove'
+    
+    const formdata = new FormData();
+    formdata.append('task_id', taskId.toString())
+    formdata.append('token', this.token)
+
+    this.http.post<object>(url, formdata, {})
+        .subscribe(response => {
+          console.log("Task removed Successfully."); // TODO: toast
+          this.updateTasks()
+        }, error => {
+           console.log("Error: " + error.message); // TODO: toast
+        });
+  }
+
   onSubmit() {
     const formdata = new FormData();
     formdata.append('task_title', <string>this.form.value.title);

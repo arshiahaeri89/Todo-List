@@ -46,7 +46,7 @@
         <ion-item *ngFor="let task of undoneTasks">
           <ion-item-sliding>
             <ion-item-options side="start">
-              <ion-item-option color="warning">
+              <ion-item-option (click)="editTask(task.task_id)" color="warning">
                 <ion-icon slot="start" name="build-outline"></ion-icon>
                 ویرایش
               </ion-item-option>
@@ -57,7 +57,7 @@
             </ion-item>
         
             <ion-item-options>
-              <ion-item-option color="danger">
+              <ion-item-option (click)="removeTask(task.task_id)" color="danger">
                 <ion-icon slot="start" name="trash"></ion-icon>
                 حذف
               </ion-item-option>
