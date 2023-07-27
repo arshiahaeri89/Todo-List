@@ -4,6 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { TaskResponse } from '../task-response'
 import { StorageService } from '../storage-service.service';
 import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab2',
@@ -17,7 +18,13 @@ export class Tab2Page {
   public undoneTasks: Array<any>;
   public token: string;
   
-  constructor(private http: HttpClient, private formbuilder: FormBuilder, private storage: StorageService, private router: Router) {
+  constructor(
+      private http: HttpClient, 
+      private formbuilder: FormBuilder, 
+      private storage: StorageService, 
+      private router: Router,
+      private toastCtrl: ToastController
+    ) {
     this.token = "";
     this.url = "";
     this.undoneTasks = [];
@@ -34,9 +41,20 @@ export class Tab2Page {
     this.token = await this.storage.get('token');
     if (this.token == undefined || this.token == null || this.token == "") {
       this.router.navigate(['/tabs/tab4']);
-      console.log('you are not logged in'); // TODO: Toast
+      this.toast('برای دسترسی به اپلیکیشن باید لاگین کنید');
+    } else {
+      this.updateTasks();
+    }
   }
-    this.updateTasks();
+
+  async toast(message: string) {
+    const toast = await this.toastCtrl.create({
+      message: message,
+      duration: 5000,
+      position: 'bottom',
+    });
+
+    await toast.present();
   }
 
   updateTasks() {
@@ -57,10 +75,10 @@ export class Tab2Page {
 
     this.http.post<object>(url, formdata, {})
         .subscribe(response => {
-          console.log("Task removed Successfully."); // TODO: toast
+          this.toast("کار با موفقیت حذف شد");
           this.updateTasks()
         }, error => {
-           console.log("Error: " + error.message); // TODO: toast
+           this.toast("Error: " + error.message);
         });
   }
 
@@ -75,9 +93,9 @@ export class Tab2Page {
 
     this.http.post(this.url, formdata, {})
       .subscribe(response => {
-          console.log('Success: ' + response); // TODO: toast
+          this.toast('کار با موفقیت اضافه شد');
       }, error => {
-          console.log("Error: " + error.message); // TODO: toast
+          this.toast("Error: " + error.message);
       });
   }
 
@@ -93,7 +111,7 @@ export class Tab2Page {
               }
             });
         }, error => {
-            console.log("Error: " + error.message); // TODO: toast
+            this.toast("Error: " + error.message);
         });
   }
 

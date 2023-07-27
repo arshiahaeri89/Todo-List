@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { TaskResponse } from '../task-response';
 import { StorageService } from '../storage-service.service';
 import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab3',
@@ -15,7 +16,12 @@ export class Tab3Page {
   public doneTasks: Array<any>;
   public token: string;
 
-  constructor(private http: HttpClient, private storage: StorageService, private router: Router) {
+  constructor(
+      private http: HttpClient, 
+      private storage: StorageService, 
+      private router: Router,
+      private toastCtrl: ToastController
+    ) {
     this.token = "";
     this.url = "";
     this.doneTasks = [];
@@ -26,9 +32,21 @@ export class Tab3Page {
     this.token = await this.storage.get('token');
     if (this.token == undefined || this.token == null || this.token == "") {
       this.router.navigate(['/tabs/tab4']);
-      console.log('you are not logged in'); // TODO: Toast
-  }
+      this.toast('برای دسترسی به اپلیکیشن باید لاگین کنید');
+    } else {
+      this.updateTasks();
+    }
     this.updateTasks()
+  }
+
+  async toast(message: string) {
+    const toast = await this.toastCtrl.create({
+      message: message,
+      duration: 5000,
+      position: 'bottom',
+    });
+
+    await toast.present();
   }
 
   updateTasks() {
@@ -46,10 +64,10 @@ export class Tab3Page {
 
     this.http.post<object>(url, formdata, {})
         .subscribe(response => {
-          console.log("Status edited Successfully."); // TODO: toast
+          this.toast("وضعیت به انجام نشده تغییر کرد");
           this.updateTasks()
         }, error => {
-           console.log("Error: " + error.message); // TODO: toast
+           this.toast("Error: " + error.message);
         });
   }
 
@@ -62,10 +80,10 @@ export class Tab3Page {
 
     this.http.post<object>(url, formdata, {})
         .subscribe(response => {
-          console.log("Task removed Successfully."); // TODO: toast
+          this.toast("کار با موفقیت حذف شد");
           this.updateTasks()
         }, error => {
-           console.log("Error: " + error.message); // TODO: toast
+           this.toast("Error: " + error.message);
         });
   }
 
@@ -81,7 +99,7 @@ export class Tab3Page {
               }
             });
         }, error => {
-            console.log("Error: " + error.message); // TODO: toast
+            this.toast("Error: " + error.message);
         });
   }
 
