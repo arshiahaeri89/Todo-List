@@ -14,7 +14,7 @@ export class Tab2Page {
   public form;
   private url: string;
   public undoneTasks: Array<any>;
-  public token: string; //TODO: Token System 
+  public token: string;
   
   constructor(private http: HttpClient, private formbuilder: FormBuilder, private storage: StorageService) {
     this.token = "";
