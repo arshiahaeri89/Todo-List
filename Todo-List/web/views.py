@@ -10,7 +10,7 @@ import config
 @app.route('/')
 def index():
     """ index page of website """
-    return render_template('index.html')
+    return render_template('index.html'), 200
 
 @app.route('/tasks/add', methods=['POST'])
 def add_task():
@@ -41,16 +41,21 @@ def add_task():
             data = {
                 'status': 'ok'
             }
+
+            return jsonify(data), 200
         else:
             data = {
                 'status': 'not found'
             }
+
+            return jsonify(data), 404
     except Exception as err:
         data = {
             'status': 'error',
             'exception': str(err)
         }
-    return jsonify(data)
+
+        return jsonify(data), 500
 
 
 
@@ -76,17 +81,21 @@ def get_tasks():
                 'status': 'ok',
                 'tasks': tasks_list
             }
+
+            return jsonify(data), 200
         else:
             data = {
                 'status': 'not found'
             }
+
+            return jsonify(data), 404
     except Exception as err:
         data = {
             'status': 'error',
             'exception': str(err)
         }
 
-    return jsonify(data)
+        return jsonify(data), 500
 
 
 @app.route('/tasks/edit', methods=['POST'])
@@ -118,20 +127,27 @@ def edit_task():
                 data = {
                     'status': 'ok'
                 }
+
+                return jsonify(data), 200
             else:
                 data = {
                     'status': 'not found'
                 }
+
+                return jsonify(data), 404
         else:
             data = {
                 'status': 'not found'
             }
+
+            return jsonify(data), 404
     except Exception as err:
         data = {
             'status': 'error',
             'exception': str(err)
         }
-    return jsonify(data)
+
+        return jsonify(data), 500
 
 @app.route('/tasks/remove', methods=['POST'])
 def remove_task():
@@ -150,20 +166,27 @@ def remove_task():
                 data = {
                     'status': 'ok'
                 }
+
+                return jsonify(data), 200
             else:
                 data = {
                     'status': 'not found'
                 }
+
+                return jsonify(data), 404
         else:
             data = {
                 'status': 'not found'
             }
+
+            return jsonify(data), 404
     except Exception as err:
         data = {
             'status': 'error',
             'exception': str(err)
         }
-    return jsonify(data)
+        
+        return jsonify(data), 500
 
 
 @app.route('/q/stats', methods=['POST'])
@@ -185,16 +208,21 @@ def general_stats():
                 'undone_tasks': undone_tasks,
                 'done_tasks': done_tasks
             }
+
+            return jsonify(data), 200
         else:
             data = {
                 'status': 'not found'
             }
+
+            return jsonify(data), 404
     except Exception as err:
         data = {
             'status': 'error',
             'exception': str(err)
         }
-    return jsonify(data)
+        
+        return jsonify(data), 500
 
 
 @app.route('/account/register', methods=['GET', 'POST'])
@@ -230,14 +258,18 @@ def login():
                 'status': 'ok',
                 'token': user.token
             }
+
+            return jsonify(data), 200
         else:
             data = {
                 'status': 'not found'
             }
+
+            return jsonify(data), 404
     except Exception as err:
         data = {
             'status': 'error',
             'exception': str(err)
         }
 
-    return jsonify(data)
+        return jsonify(data), 500
