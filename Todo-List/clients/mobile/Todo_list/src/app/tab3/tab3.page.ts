@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { TaskResponse } from '../task-response';
 import { StorageService } from '../storage-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab3',
@@ -14,7 +15,7 @@ export class Tab3Page {
   public doneTasks: Array<any>;
   public token: string;
 
-  constructor(private http: HttpClient, private storage: StorageService) {
+  constructor(private http: HttpClient, private storage: StorageService, private router: Router) {
     this.token = "";
     this.url = "";
     this.doneTasks = [];
@@ -23,6 +24,10 @@ export class Tab3Page {
   async ionViewDidEnter() {
     this.url = await this.storage.get("baseURL") + "/q/tasks";
     this.token = await this.storage.get('token');
+    if (this.token == undefined || this.token == null || this.token == "") {
+      this.router.navigate(['/tabs/tab4']);
+      console.log('you are not logged in'); // TODO: Toast
+  }
     this.updateTasks()
   }
 

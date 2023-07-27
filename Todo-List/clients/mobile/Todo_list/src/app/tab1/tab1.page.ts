@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Generalstats } from '../generalstats';
 import { StorageService } from '../storage-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab1',
@@ -16,7 +17,7 @@ export class Tab1Page {
     public token: string;
   
 
-    constructor(private http: HttpClient, private storage: StorageService) {
+    constructor(private http: HttpClient, private storage: StorageService, private router: Router) {
         this.token = "";
         this.url = "";
         this.doneTasks = 0;
@@ -26,6 +27,10 @@ export class Tab1Page {
     async ionViewDidEnter() {
         this.url = await this.storage.get("baseURL") + "/q/stats";
         this.token = await this.storage.get("token");
+        if (this.token == undefined || this.token == null || this.token == "") {
+            this.router.navigate(['/tabs/tab4']);
+            console.log('you are not logged in'); // TODO: Toast
+        }
         this.get_stats();
     }
 

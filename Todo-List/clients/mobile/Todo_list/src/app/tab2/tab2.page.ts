@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { TaskResponse } from '../task-response'
 import { StorageService } from '../storage-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab2',
@@ -16,7 +17,7 @@ export class Tab2Page {
   public undoneTasks: Array<any>;
   public token: string;
   
-  constructor(private http: HttpClient, private formbuilder: FormBuilder, private storage: StorageService) {
+  constructor(private http: HttpClient, private formbuilder: FormBuilder, private storage: StorageService, private router: Router) {
     this.token = "";
     this.url = "";
     this.undoneTasks = [];
@@ -31,6 +32,10 @@ export class Tab2Page {
   async ionViewDidEnter() {
     this.url = await this.storage.get("baseURL") + "/q/tasks";
     this.token = await this.storage.get('token');
+    if (this.token == undefined || this.token == null || this.token == "") {
+      this.router.navigate(['/tabs/tab4']);
+      console.log('you are not logged in'); // TODO: Toast
+  }
     this.updateTasks();
   }
 

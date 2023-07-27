@@ -13,5 +13,5 @@
 - [x] linking in tab1
 - [ ] required for forms
 - [ ] fix page2 datetime
-- [ ] hide tabs when user not logged in
+- [x] do not get access using tabs to user when not logged in
 - [x] create apis.md file
