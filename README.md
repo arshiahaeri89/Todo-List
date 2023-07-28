@@ -12,6 +12,6 @@
 - [x] better response codes for web server
 - [x] linking in tab1
 - [ ] required for forms
-- [ ] fix page2 datetime
+- [x] fix page2 datetime
 - [x] do not get access using tabs to user when not logged in
 - [x] create apis.md file

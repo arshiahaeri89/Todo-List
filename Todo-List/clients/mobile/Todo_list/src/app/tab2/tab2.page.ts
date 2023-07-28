@@ -82,7 +82,9 @@ export class Tab2Page {
         });
   }
 
-  onSubmit() {
+  async onSubmit() {
+    let url = await this.storage.get('baseURL') + '/tasks/add';
+
     const formdata = new FormData();
     formdata.append('task_title', <string>this.form.value.title);
     formdata.append('task_desc', <string>this.form.value.description);
@@ -91,9 +93,10 @@ export class Tab2Page {
     formdata.append('task_status', 'UNDONE');
     formdata.append('token', this.token);
 
-    this.http.post(this.url, formdata, {})
+    this.http.post(url, formdata, {})
       .subscribe(response => {
           this.toast('کار با موفقیت اضافه شد');
+          this.updateTasks();
       }, error => {
           this.toast("Error: " + error.message);
       });

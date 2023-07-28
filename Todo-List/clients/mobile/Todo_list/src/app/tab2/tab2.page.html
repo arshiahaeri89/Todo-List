@@ -13,9 +13,9 @@
     </ion-card-header>
   
     <ion-card-content>
-      <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <ion-input type="text" label="عنوان" labelPlacement="floating" name="title"></ion-input>
-        <ion-input type="text" label="توضیحات" labelPlacement="floating" name="description"></ion-input>
+      <form (ngSubmit)="onSubmit()">
+        <ion-input type="text" label="عنوان" labelPlacement="floating" name="title" [(ngModel)]="form.value.title"></ion-input>
+        <ion-input type="text" label="توضیحات" labelPlacement="floating" name="description" [(ngModel)]="form.value.description"></ion-input>
 
         <ion-input value="{{ form.value.startDate }}" name="startDate" id="start-date" label="تاریخ شروع"></ion-input>
         <ion-popover trigger="start-date" >
