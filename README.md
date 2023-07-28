@@ -4,7 +4,7 @@
 
 - [x] Do some more error handling
 - [x] Add Token authentication
-- [ ] in client side, check end date was bigger or equal than start date
+- [x] in client side, check end date was bigger or equal than start date
 - [x] Modularization
 - [x] set good icons for ionic tabs
 - [x] Handle Showing the form and exit button when user logged in

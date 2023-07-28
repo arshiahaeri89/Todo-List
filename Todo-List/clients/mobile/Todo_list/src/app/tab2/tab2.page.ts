@@ -62,6 +62,13 @@ export class Tab2Page {
     this.getUndoneTasks();
   }
 
+  isValidDates(startDate: string, endDate: string) {
+    let start = new Date(startDate);
+    let end = new Date(endDate);
+
+    return start <= end;
+  }
+
   editTask(taskId: number) {
     console.log('editTask ' + taskId); // TODO: Write this
   }
@@ -85,21 +92,31 @@ export class Tab2Page {
   async onSubmit() {
     let url = await this.storage.get('baseURL') + '/tasks/add';
 
-    const formdata = new FormData();
-    formdata.append('task_title', <string>this.form.value.title);
-    formdata.append('task_desc', <string>this.form.value.description);
-    formdata.append('task_start_date', (<string>this.form.value.startDate).split('T')[0] + ' ' + (<string>this.form.value.startDate).split('T')[1]);
-    formdata.append('task_end_date', (<string>this.form.value.endDate).split('T')[0] + ' ' + (<string>this.form.value.endDate).split('T')[1]);
-    formdata.append('task_status', 'UNDONE');
-    formdata.append('token', this.token);
+    let title = <string>this.form.value.title;
+    let desc = <string>this.form.value.description
+    let startDate = (<string>this.form.value.startDate).split('T')[0] + ' ' + (<string>this.form.value.startDate).split('T')[1]
+    let endDate = (<string>this.form.value.endDate).split('T')[0] + ' ' + (<string>this.form.value.endDate).split('T')[1]
+    let status = 'UNDONE'
 
-    this.http.post(url, formdata, {})
-      .subscribe(response => {
-          this.toast('کار با موفقیت اضافه شد');
-          this.updateTasks();
-      }, error => {
-          this.toast("Error: " + error.message);
-      });
+    if (this.isValidDates(startDate, endDate)) {
+      const formdata = new FormData();
+      formdata.append('task_title', title);
+      formdata.append('task_desc', desc);
+      formdata.append('task_start_date', startDate);
+      formdata.append('task_end_date', endDate);
+      formdata.append('task_status', status);
+      formdata.append('token', this.token);
+
+      this.http.post(url, formdata, {})
+        .subscribe(response => {
+            this.toast('کار با موفقیت اضافه شد');
+            this.updateTasks();
+        }, error => {
+            this.toast("Error: " + error.message);
+        });
+    } else {
+      this.toast('تاریخ شروع نباید از تاریخ پایان جلوتر باشد')
+    }
   }
 
   getUndoneTasks() {
