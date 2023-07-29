@@ -61,6 +61,10 @@
                 <ion-icon slot="start" name="trash"></ion-icon>
                 حذف
               </ion-item-option>
+              <ion-item-option (click)="setTaskStatus(task.task_id)" color="success">
+                <ion-icon slot="start" name="folder-open-outline"></ion-icon>
+                انجام شد
+              </ion-item-option>
             </ion-item-options>
           </ion-item-sliding>
         </ion-item>

@@ -69,6 +69,23 @@ export class Tab2Page {
     return start <= end;
   }
 
+  async setTaskStatus(taskId: number) {
+    let url = await this.storage.get('baseURL') + '/tasks/status'
+    
+    const formdata = new FormData();
+    formdata.append('task_id', taskId.toString())
+    formdata.append('task_status', 'DONE')
+    formdata.append('token', this.token)
+
+    this.http.post<object>(url, formdata, {})
+        .subscribe(response => {
+          this.toast("وضعیت به انجام شده تغییر کرد");
+          this.updateTasks()
+        }, error => {
+           this.toast("Error: " + error.message);
+        });
+  }
+
   editTask(taskId: number) {
     console.log('editTask ' + taskId); // TODO: Write this
   }
