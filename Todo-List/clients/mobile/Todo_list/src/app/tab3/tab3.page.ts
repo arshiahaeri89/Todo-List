@@ -36,7 +36,6 @@ export class Tab3Page {
     } else {
       this.updateTasks();
     }
-    this.updateTasks()
   }
 
   async toast(message: string) {

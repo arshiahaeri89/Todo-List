@@ -17,14 +17,14 @@
         <ion-input type="text" label="عنوان" labelPlacement="floating" name="title" [(ngModel)]="form.value.title"></ion-input>
         <ion-input type="text" label="توضیحات" labelPlacement="floating" name="description" [(ngModel)]="form.value.description"></ion-input>
 
-        <ion-input value="{{ form.value.startDate }}" name="startDate" id="start-date" label="تاریخ شروع"></ion-input>
+        <ion-input value="{{ form.value.startDate != null || form.value.startDate != undefined ? form.value.startDate.split('T')[0] : '' }}" name="startDate" id="start-date" label="تاریخ شروع"></ion-input>
         <ion-popover trigger="start-date" >
             <ng-template>
               <ion-datetime [(ngModel)]="form.value.startDate" [ngModelOptions]="{standalone: true}" presentation="date" locale="en-US" [showDefaultButtons]="true" [(ngModel)]="form.value.startDate"></ion-datetime>
             </ng-template>
         </ion-popover>
 
-        <ion-input value="{{ form.value.endDate }}" name="endDate" id="end-date" label="تاریخ پایان"></ion-input>
+        <ion-input value="{{ form.value.endDate != null || form.value.endDate != undefined ? form.value.endDate.split('T')[0] : '' }}" name="endDate" id="end-date" label="تاریخ پایان"></ion-input>
         <ion-popover trigger="end-date" >
             <ng-template>
                 <ion-datetime [(ngModel)]="form.value.endDate" [ngModelOptions]="{standalone: true}" presentation="date" locale="en-US" [showDefaultButtons]="true"></ion-datetime>

@@ -48,21 +48,32 @@ export class Tab4Page  {
     await toast.present();
   }
 
-  login() {
-    const formdata = new FormData();
-    formdata.append('username', <string>this.form.value.username);
-    formdata.append('password', <string>this.form.value.password);
+  isEmpty(value: undefined | null | string) {
+    console.log(value+' '+value == undefined || value == null || value == "");
+    return value == undefined || value == null || value == ""
+  }
 
-    this.http.post<LoginResponse>(this.url, formdata, {})
-        .subscribe(async response => {
-            console.log(response);
-            this.token = response.token;
-            await this.storage.set('token', this.token);
-            this.loggedIn = true;
-            this.toast('با موفقیت لاگین شدید')
-        }, error => {
-            this.toast("Error: " + error.message);
-        });
+  login() {
+    let username = <string>this.form.value.username;
+    let password = <string>this.form.value.password;
+    
+    if (!(this.isEmpty(username) || this.isEmpty(password))) {
+      const formdata = new FormData();
+      formdata.append('username', username);
+      formdata.append('password', password);
+
+      this.http.post<LoginResponse>(this.url, formdata, {})
+          .subscribe(async response => {
+              this.token = response.token;
+              await this.storage.set('token', this.token);
+              this.loggedIn = true;
+              this.toast('با موفقیت لاگین شدید')
+          }, error => {
+              this.toast("Error: " + error.message);
+          });
+    } else {
+      this.toast('وارد کردن همه مقادیر الزامی است');
+    }
   }
 
   async logout() {

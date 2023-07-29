@@ -69,6 +69,11 @@ export class Tab2Page {
     return start <= end;
   }
 
+  isEmpty(value: undefined | null | string) {
+    console.log(value+' '+value == undefined || value == null || value == "");
+    return value == undefined || value == null || value == ""
+  }
+
   async setTaskStatus(taskId: number) {
     let url = await this.storage.get('baseURL') + '/tasks/status'
     
@@ -87,7 +92,7 @@ export class Tab2Page {
   }
 
   editTask(taskId: number) {
-    console.log('editTask ' + taskId); // TODO: Write this
+    console.log('editTask ' + taskId);
   }
 
   async removeTask(taskId: number) {
@@ -109,30 +114,34 @@ export class Tab2Page {
   async onSubmit() {
     let url = await this.storage.get('baseURL') + '/tasks/add';
 
-    let title = <string>this.form.value.title;
-    let desc = <string>this.form.value.description
-    let startDate = (<string>this.form.value.startDate).split('T')[0] + ' ' + (<string>this.form.value.startDate).split('T')[1]
-    let endDate = (<string>this.form.value.endDate).split('T')[0] + ' ' + (<string>this.form.value.endDate).split('T')[1]
+    let title = (<string>this.form.value.title).trim();
+    let desc = (<string>this.form.value.description).trim();
+    let startDate = ((<string>this.form.value.startDate).split('T')[0] + ' ' + (<string>this.form.value.startDate).split('T')[1]).trim()
+    let endDate = ((<string>this.form.value.endDate).split('T')[0] + ' ' + (<string>this.form.value.endDate).split('T')[1]).trim()
     let status = 'UNDONE'
 
-    if (this.isValidDates(startDate, endDate)) {
-      const formdata = new FormData();
-      formdata.append('task_title', title);
-      formdata.append('task_desc', desc);
-      formdata.append('task_start_date', startDate);
-      formdata.append('task_end_date', endDate);
-      formdata.append('task_status', status);
-      formdata.append('token', this.token);
-
-      this.http.post(url, formdata, {})
-        .subscribe(response => {
-            this.toast('کار با موفقیت اضافه شد');
-            this.updateTasks();
-        }, error => {
-            this.toast("Error: " + error.message);
-        });
+    if (!(this.isEmpty(title) || this.isEmpty(desc) || this.isEmpty(startDate) || this.isEmpty(endDate))) {
+      if (this.isValidDates(startDate, endDate)) {
+        const formdata = new FormData();
+        formdata.append('task_title', title);
+        formdata.append('task_desc', desc);
+        formdata.append('task_start_date', startDate);
+        formdata.append('task_end_date', endDate);
+        formdata.append('task_status', status);
+        formdata.append('token', this.token);
+  
+        this.http.post(url, formdata, {})
+          .subscribe(response => {
+              this.toast('کار با موفقیت اضافه شد');
+              this.updateTasks();
+          }, error => {
+              this.toast("Error: " + error.message);
+          });
+      } else {
+        this.toast('تاریخ شروع نباید از تاریخ پایان جلوتر باشد');
+      }
     } else {
-      this.toast('تاریخ شروع نباید از تاریخ پایان جلوتر باشد')
+      this.toast('وارد کردن همه مقادیر الزامی است')
     }
   }
 

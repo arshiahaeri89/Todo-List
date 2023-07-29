@@ -11,7 +11,9 @@
 - [x] Vazir font
 - [x] better response codes for web server
 - [x] linking in tab1
-- [ ] required for forms
+- [x] required for forms
 - [x] fix page2 datetime
 - [x] do not get access using tabs to user when not logged in
 - [x] create apis.md file
+- [ ] create edit task component
+- [ ] better show for tasks list
