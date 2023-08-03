@@ -43,6 +43,16 @@ export class Tab3Page {
     this.getDoneTasks()
   }
 
+  format_task_show(task: any) {
+    let startDate = task.task_start_date.split(' ');
+    startDate = startDate[0] + ' ' + startDate[1] + ' ' + startDate[2] + ' ' + startDate[3];
+    
+    let endDate = task.task_end_date.split(' ');
+    endDate = endDate[0] + ' ' + endDate[1] + ' ' + endDate[2] + ' ' + endDate[3]
+
+    return task.task_title + ' ' + startDate + ' - ' + endDate
+  }
+
   async setTaskStatus(taskId: number) {
     let url = await this.storage.get('baseURL') + '/tasks/status'
     

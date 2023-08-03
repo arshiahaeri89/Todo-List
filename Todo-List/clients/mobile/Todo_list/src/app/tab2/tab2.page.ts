@@ -17,6 +17,7 @@ export class Tab2Page {
   private url: string;
   public undoneTasks: Array<any>;
   public token: string;
+  public isModalOpen;
   
   constructor(
       private http: HttpClient, 
@@ -34,6 +35,7 @@ export class Tab2Page {
       startDate: ['', Validators.compose([Validators.required])],
       endDate: ['', Validators.compose([Validators.required])]
     });
+    this.isModalOpen = false;
   }
 
   async ionViewDidEnter() {
@@ -50,6 +52,10 @@ export class Tab2Page {
   updateTasks() {
     this.undoneTasks = [];
     this.getUndoneTasks();
+  }
+
+  setOpen(isOpen: boolean) {
+    this.isModalOpen = isOpen;
   }
 
   format_task_show(task: any) {
