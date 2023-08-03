@@ -16,4 +16,4 @@
 - [x] do not get access using tabs to user when not logged in
 - [x] create apis.md file
 - [ ] create edit task component
-- [ ] better show for tasks list
+- [x] better show for tasks list
