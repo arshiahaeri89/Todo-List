@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Generalstats } from '../generalstats';
 import { StorageService } from '../storage-service.service';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { UtilsService } from '../utils.service';
 
 @Component({
   selector: 'app-tab1',
@@ -22,7 +22,7 @@ export class Tab1Page {
             private http: HttpClient, 
             private storage: StorageService, 
             private router: Router, 
-            private toastCtrl: ToastController
+            private utils: UtilsService
         ) {
         this.token = "";
         this.url = "";
@@ -35,20 +35,10 @@ export class Tab1Page {
         this.token = await this.storage.get("token");
         if (this.token == undefined || this.token == null || this.token == "") {
             this.router.navigate(['/tabs/tab4']);
-            this.toast('برای دسترسی به اپلیکیشن باید لاگین کنید');
+            this.utils.toast('برای دسترسی به اپلیکیشن باید لاگین کنید');
         } else {
             this.get_stats();
         }
-    }
-
-    async toast(message: string) {
-        const toast = await this.toastCtrl.create({
-          message: message,
-          duration: 5000,
-          position: 'bottom',
-        });
-
-        await toast.present();
     }
 
     get_stats() {
@@ -60,7 +50,7 @@ export class Tab1Page {
                 this.doneTasks = response.done_tasks;
                 this.undoneTasks = response.undone_tasks;
             }, error => {
-                this.toast("Error: " + error.message);
+                this.utils.toast("Error: " + error.message);
             });
     }
 

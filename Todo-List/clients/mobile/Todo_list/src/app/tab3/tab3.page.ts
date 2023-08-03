@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { TaskResponse } from '../task-response';
 import { StorageService } from '../storage-service.service';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { UtilsService } from '../utils.service';
 
 @Component({
   selector: 'app-tab3',
@@ -20,7 +20,7 @@ export class Tab3Page {
       private http: HttpClient, 
       private storage: StorageService, 
       private router: Router,
-      private toastCtrl: ToastController
+      private utils: UtilsService 
     ) {
     this.token = "";
     this.url = "";
@@ -32,20 +32,10 @@ export class Tab3Page {
     this.token = await this.storage.get('token');
     if (this.token == undefined || this.token == null || this.token == "") {
       this.router.navigate(['/tabs/tab4']);
-      this.toast('برای دسترسی به اپلیکیشن باید لاگین کنید');
+      this.utils.toast('برای دسترسی به اپلیکیشن باید لاگین کنید');
     } else {
       this.updateTasks();
     }
-  }
-
-  async toast(message: string) {
-    const toast = await this.toastCtrl.create({
-      message: message,
-      duration: 5000,
-      position: 'bottom',
-    });
-
-    await toast.present();
   }
 
   updateTasks() {
@@ -63,10 +53,10 @@ export class Tab3Page {
 
     this.http.post<object>(url, formdata, {})
         .subscribe(response => {
-          this.toast("وضعیت به انجام نشده تغییر کرد");
+          this.utils.toast("وضعیت به انجام نشده تغییر کرد");
           this.updateTasks()
         }, error => {
-           this.toast("Error: " + error.message);
+           this.utils.toast("Error: " + error.message);
         });
   }
 
@@ -79,10 +69,10 @@ export class Tab3Page {
 
     this.http.post<object>(url, formdata, {})
         .subscribe(response => {
-          this.toast("کار با موفقیت حذف شد");
+          this.utils.toast("کار با موفقیت حذف شد");
           this.updateTasks()
         }, error => {
-           this.toast("Error: " + error.message);
+           this.utils.toast("Error: " + error.message);
         });
   }
 
@@ -98,7 +88,7 @@ export class Tab3Page {
               }
             });
         }, error => {
-            this.toast("Error: " + error.message);
+            this.utils.toast("Error: " + error.message);
         });
   }
 

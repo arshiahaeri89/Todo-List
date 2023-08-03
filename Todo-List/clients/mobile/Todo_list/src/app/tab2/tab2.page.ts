@@ -4,7 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { TaskResponse } from '../task-response'
 import { StorageService } from '../storage-service.service';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { UtilsService } from '../utils.service';
 
 @Component({
   selector: 'app-tab2',
@@ -23,7 +23,7 @@ export class Tab2Page {
       private formbuilder: FormBuilder, 
       private storage: StorageService, 
       private router: Router,
-      private toastCtrl: ToastController
+      private utils: UtilsService
     ) {
     this.token = "";
     this.url = "";
@@ -41,36 +41,15 @@ export class Tab2Page {
     this.token = await this.storage.get('token');
     if (this.token == undefined || this.token == null || this.token == "") {
       this.router.navigate(['/tabs/tab4']);
-      this.toast('برای دسترسی به اپلیکیشن باید لاگین کنید');
+      this.utils.toast('برای دسترسی به اپلیکیشن باید لاگین کنید');
     } else {
       this.updateTasks();
     }
   }
 
-  async toast(message: string) {
-    const toast = await this.toastCtrl.create({
-      message: message,
-      duration: 5000,
-      position: 'bottom',
-    });
-
-    await toast.present();
-  }
-
   updateTasks() {
     this.undoneTasks = [];
     this.getUndoneTasks();
-  }
-
-  isValidDates(startDate: string, endDate: string) {
-    let start = new Date(startDate);
-    let end = new Date(endDate);
-
-    return start <= end;
-  }
-
-  isEmpty(value: undefined | null | string) {
-    return value == undefined || value == null || value == ""
   }
 
   format_task_show(task: any) {
@@ -93,10 +72,10 @@ export class Tab2Page {
 
     this.http.post<object>(url, formdata, {})
         .subscribe(response => {
-          this.toast("وضعیت به انجام شده تغییر کرد");
+          this.utils.toast("وضعیت به انجام شده تغییر کرد");
           this.updateTasks()
         }, error => {
-           this.toast("Error: " + error.message);
+           this.utils.toast("Error: " + error.message);
         });
   }
 
@@ -113,10 +92,10 @@ export class Tab2Page {
 
     this.http.post<object>(url, formdata, {})
         .subscribe(response => {
-          this.toast("کار با موفقیت حذف شد");
+          this.utils.toast("کار با موفقیت حذف شد");
           this.updateTasks()
         }, error => {
-           this.toast("Error: " + error.message);
+           this.utils.toast("Error: " + error.message);
         });
   }
 
@@ -129,8 +108,8 @@ export class Tab2Page {
     let endDate = ((<string>this.form.value.endDate).split('T')[0] + ' ' + (<string>this.form.value.endDate).split('T')[1]).trim()
     let status = 'UNDONE'
 
-    if (!(this.isEmpty(title) || this.isEmpty(desc) || this.isEmpty(startDate) || this.isEmpty(endDate))) {
-      if (this.isValidDates(startDate, endDate)) {
+    if (!(this.utils.isEmpty(title) || this.utils.isEmpty(desc) || this.utils.isEmpty(startDate) || this.utils.isEmpty(endDate))) {
+      if (this.utils.isValidDates(startDate, endDate)) {
         const formdata = new FormData();
         formdata.append('task_title', title);
         formdata.append('task_desc', desc);
@@ -141,16 +120,16 @@ export class Tab2Page {
   
         this.http.post(url, formdata, {})
           .subscribe(response => {
-              this.toast('کار با موفقیت اضافه شد');
+              this.utils.toast('کار با موفقیت اضافه شد');
               this.updateTasks();
           }, error => {
-              this.toast("Error: " + error.message);
+              this.utils.toast("Error: " + error.message);
           });
       } else {
-        this.toast('تاریخ شروع نباید از تاریخ پایان جلوتر باشد');
+        this.utils.toast('تاریخ شروع نباید از تاریخ پایان جلوتر باشد');
       }
     } else {
-      this.toast('وارد کردن همه مقادیر الزامی است')
+      this.utils.toast('وارد کردن همه مقادیر الزامی است')
     }
   }
 
@@ -166,7 +145,7 @@ export class Tab2Page {
               }
             });
         }, error => {
-            this.toast("Error: " + error.message);
+            this.utils.toast("Error: " + error.message);
         });
   }
 
