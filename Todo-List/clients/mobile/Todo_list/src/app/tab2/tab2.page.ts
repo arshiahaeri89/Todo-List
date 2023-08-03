@@ -70,7 +70,6 @@ export class Tab2Page {
   }
 
   isEmpty(value: undefined | null | string) {
-    console.log(value+' '+value == undefined || value == null || value == "");
     return value == undefined || value == null || value == ""
   }
 
