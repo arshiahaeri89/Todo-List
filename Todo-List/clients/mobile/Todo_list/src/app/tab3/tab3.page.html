@@ -23,9 +23,28 @@
               </ion-item-option>
             </ion-item-options>
             
-            <ion-item>
+            <ion-item (click)="setOpen(task.task_id, true)">
               <ion-label class="center">{{ format_task_show(task) }}</ion-label>
             </ion-item>
+            <ion-modal [isOpen]="openModals.includes(task.task_id)">
+              <ng-template>
+                <ion-header>
+                  <ion-toolbar>
+                    <ion-title>{{ task.task_title }}</ion-title>
+                    <ion-buttons slot="end">
+                      <ion-button (click)="setOpen(task.task_id, false)">بستن</ion-button>
+                    </ion-buttons>
+                  </ion-toolbar>
+                </ion-header>
+                <ion-content class="ion-padding">
+                  <h6>عنوان: {{ task.task_title }}</h6>
+                  <h6>توضیحات: {{ task.task_desc }}</h6>
+                  <h6>تاریخ شروع: {{ task.task_start_date.split(' ')[0] + ' ' + task.task_start_date.split(' ')[1] + ' ' + task.task_start_date.split(' ')[2] + ' ' + task.task_start_date.split(' ')[3] }}</h6>
+                  <h6>تاریخ پایان: {{ task.task_end_date.split(' ')[0] + ' ' + task.task_end_date.split(' ')[1] + ' ' + task.task_end_date.split(' ')[2] + ' ' + task.task_end_date.split(' ')[3] }}</h6>
+                  <h6>وضعیت: انجام شده</h6>
+                </ion-content>
+              </ng-template>
+            </ion-modal>
         
             <ion-item-options side="end">
               <ion-item-option (click)="removeTask(task.task_id)" color="danger">

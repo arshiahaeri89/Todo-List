@@ -15,9 +15,9 @@ export class Tab2Page {
 
   public form;
   private url: string;
-  public undoneTasks: Array<any>;
+  public undoneTasks: any[];
   public token: string;
-  public isModalOpen;
+  public openModals: number[];
   
   constructor(
       private http: HttpClient, 
@@ -35,7 +35,7 @@ export class Tab2Page {
       startDate: ['', Validators.compose([Validators.required])],
       endDate: ['', Validators.compose([Validators.required])]
     });
-    this.isModalOpen = false;
+    this.openModals = [];
   }
 
   async ionViewDidEnter() {
@@ -54,8 +54,12 @@ export class Tab2Page {
     this.getUndoneTasks();
   }
 
-  setOpen(isOpen: boolean) {
-    this.isModalOpen = isOpen;
+  setOpen(task_id: number, isOpen: boolean) {
+    if(isOpen) {
+      this.openModals.push(task_id);
+    } else {      
+      delete this.openModals[this.openModals.indexOf(task_id)];
+    }
   }
 
   format_task_show(task: any) {
@@ -145,7 +149,7 @@ export class Tab2Page {
     
     this.http.post<TaskResponse>(this.url, formdata, {})
         .subscribe(response => {
-            response.tasks.forEach((task) => {
+            response.tasks.forEach((task) => {              
               if (task.task_status === "UNDONE") {
                 this.undoneTasks.push(task);
               }

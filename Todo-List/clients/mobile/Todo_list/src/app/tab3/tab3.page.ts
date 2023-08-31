@@ -13,8 +13,9 @@ import { UtilsService } from '../utils.service';
 export class Tab3Page {
 
   private url: string;
-  public doneTasks: Array<any>;
+  public doneTasks: any[];
   public token: string;
+  public openModals: number[];
 
   constructor(
       private http: HttpClient, 
@@ -25,6 +26,7 @@ export class Tab3Page {
     this.token = "";
     this.url = "";
     this.doneTasks = [];
+    this.openModals = [];
   }
 
   async ionViewDidEnter() {
@@ -41,6 +43,14 @@ export class Tab3Page {
   updateTasks() {
     this.doneTasks = []
     this.getDoneTasks()
+  }
+
+  setOpen(task_id: number, isOpen: boolean) {
+    if(isOpen) {
+      this.openModals.push(task_id);
+    } else {      
+      delete this.openModals[this.openModals.indexOf(task_id)];
+    }
   }
 
   format_task_show(task: any) {

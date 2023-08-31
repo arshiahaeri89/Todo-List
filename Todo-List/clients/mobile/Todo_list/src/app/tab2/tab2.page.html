@@ -52,16 +52,16 @@
               </ion-item-option>
             </ion-item-options>
         
-            <ion-item (click)="setOpen(true)">
+            <ion-item (click)="setOpen(task.task_id, true)">
               <ion-label class="center">{{ format_task_show(task) }}</ion-label>
             </ion-item>
-            <ion-modal [isOpen]="isModalOpen">
+            <ion-modal [isOpen]="openModals.includes(task.task_id)">
               <ng-template>
                 <ion-header>
                   <ion-toolbar>
                     <ion-title>{{ task.task_title }}</ion-title>
                     <ion-buttons slot="end">
-                      <ion-button (click)="setOpen(false)">بستن</ion-button>
+                      <ion-button (click)="setOpen(task.task_id, false)">بستن</ion-button>
                     </ion-buttons>
                   </ion-toolbar>
                 </ion-header>
