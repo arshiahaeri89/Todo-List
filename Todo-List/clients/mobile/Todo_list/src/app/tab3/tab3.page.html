@@ -39,8 +39,8 @@
                 <ion-content class="ion-padding">
                   <h6>عنوان: {{ task.task_title }}</h6>
                   <h6>توضیحات: {{ task.task_desc }}</h6>
-                  <h6>تاریخ شروع: {{ format_task_show(task.task_start_date) }}</h6>
-                  <h6>تاریخ پایان: {{ format_task_show(task.task_end_date) }}</h6>
+                  <h6>تاریخ شروع: {{ format_date_show(task.task_start_date) }}</h6>
+                  <h6>تاریخ پایان: {{ format_date_show(task.task_end_date) }}</h6>
                   <h6>وضعیت: انجام شده</h6>
                 </ion-content>
               </ng-template>

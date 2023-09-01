@@ -14,10 +14,12 @@ import { UtilsService } from '../utils.service';
 export class Tab2Page {
 
   public form;
+  public formEdit;
   private url: string;
   public undoneTasks: any[];
   public token: string;
   public openModals: number[];
+  public openEditModals: number[];
   
   constructor(
       private http: HttpClient, 
@@ -35,7 +37,14 @@ export class Tab2Page {
       startDate: ['', Validators.compose([Validators.required])],
       endDate: ['', Validators.compose([Validators.required])]
     });
+    this.formEdit = this.formbuilder.group({
+      titleEdit: ['', Validators.compose([Validators.required])],
+      descriptionEdit: ['', Validators.compose([Validators.required])],
+      startDateEdit: ['', Validators.compose([Validators.required])],
+      endDateEdit: ['', Validators.compose([Validators.required])]
+    });
     this.openModals = [];
+    this.openEditModals = [];
   }
 
   async ionViewDidEnter() {
@@ -50,24 +59,32 @@ export class Tab2Page {
   }
 
   updateTasks() {
+    this.form.value.title = '';
+    this.form.value.description = '';
+    this.form.value.startDate = '';
+    this.form.value.endDate = '';
     this.undoneTasks = [];
     this.getUndoneTasks();
   }
 
-  setOpen(task_id: number, isOpen: boolean) {
+  setOpen(taskId: number, isOpen: boolean) {
     if(isOpen) {
-      this.openModals.push(task_id);
+      this.openModals.push(taskId);
     } else {      
-      delete this.openModals[this.openModals.indexOf(task_id)];
+      delete this.openModals[this.openModals.indexOf(taskId)];
     }
   }
 
+  format_date_show(date: any) {
+    let date_split = date.split(' ');
+    let result = date_split[0] + ' ' + date_split[1] + ' ' + date_split[2] + ' ' + date_split[3];
+    return result;
+  }
+
   format_task_show(task: any) {
-    let startDate = task.task_start_date.split(' ');
-    startDate = startDate[0] + ' ' + startDate[1] + ' ' + startDate[2] + ' ' + startDate[3];
+    let startDate = this.format_date_show(task.task_start_date);
     
-    let endDate = task.task_end_date.split(' ');
-    endDate = endDate[0] + ' ' + endDate[1] + ' ' + endDate[2] + ' ' + endDate[3]
+    let endDate = this.format_date_show(task.task_end_date);
 
     return task.task_title + ' ' + startDate + ' - ' + endDate
   }
@@ -89,8 +106,62 @@ export class Tab2Page {
         });
   }
 
-  editTask(taskId: number) {
-    console.log('editTask ' + taskId);
+  editTask(task: any, isOpen: boolean) {
+    console.log(task);
+
+    if(isOpen) {
+      this.formEdit.value.titleEdit = task.task_title;
+      this.formEdit.value.descriptionEdit = task.task_desc;
+      this.formEdit.value.startDateEdit = (new Date(task.task_start_date)).toISOString().split('T')[0].replace('.000Z', '');
+      this.formEdit.value.endDateEdit = (new Date(task.task_end_date)).toISOString().split('T')[0].replace('.000Z', '');
+
+      // this.openEditModals.push(task.task_id);
+      this.openEditModals.push(task);
+    } else {      
+      // this.openEditModals.splice(this.openEditModals.indexOf(task.task_id), 1);
+      this.openEditModals.splice(this.openEditModals.indexOf(task), 1);
+    }
+
+    console.log(this.openEditModals);
+    
+  }
+
+  async editTaskSubmit(taskId: number) {
+    let url = await this.storage.get('baseURL') + '/tasks/edit';
+
+    let title = (<string>this.formEdit.value.titleEdit).trim();
+    let desc = (<string>this.formEdit.value.descriptionEdit).trim();
+    let startDate = (((new Date(<string>this.formEdit.value.startDateEdit).toISOString()).split('T')[0] + ' ' + (new Date(<string>this.formEdit.value.startDateEdit).toISOString()).split('T')[1]).trim()).replace('.000Z', '')
+    let endDate = (((new Date(<string>this.formEdit.value.endDateEdit).toISOString()).split('T')[0] + ' ' + (new Date(<string>this.formEdit.value.endDateEdit).toISOString()).split('T')[1]).trim()).replace('.000Z', '')
+    let status = "UNDONE";
+
+    if (!(this.utils.isEmpty(title) || this.utils.isEmpty(desc) || this.utils.isEmpty(startDate) || this.utils.isEmpty(endDate))) {
+      if (this.utils.isValidDates(startDate, endDate)) {
+        const formdata = new FormData();
+        formdata.append('task_id', taskId.toString())
+        formdata.append('task_title', title);
+        formdata.append('task_desc', desc);
+        formdata.append('task_start_date', startDate);
+        formdata.append('task_end_date', endDate);
+        formdata.append('task_status',  status);
+        formdata.append('token', this.token);
+  
+        this.http.post(url, formdata, {})
+          .subscribe(response => {
+              // this.editTask(this.openEditModals[this.openEditModals.indexOf(taskId)], false);
+              this.editTask(
+                this.undoneTasks.filter((value, index, array) => value.task_id == taskId), false);
+              this.updateTasks();
+              this.utils.toast('کار با موفقیت ویرایش شد');
+          }, error => {
+              this.utils.toast("Error: " + error.message);
+          });
+      } else {
+        this.utils.toast('تاریخ شروع نباید از تاریخ پایان جلوتر باشد');
+      }
+    } else {
+      this.utils.toast('وارد کردن همه مقادیر الزامی است')
+    }
   }
 
   async removeTask(taskId: number) {

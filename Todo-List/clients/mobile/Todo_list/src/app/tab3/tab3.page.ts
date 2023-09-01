@@ -53,12 +53,16 @@ export class Tab3Page {
     }
   }
 
+  format_date_show(date: any) {
+    let date_split = date.split(' ');
+    let result = date_split[0] + ' ' + date_split[1] + ' ' + date_split[2] + ' ' + date_split[3];
+    return result;
+  }
+
   format_task_show(task: any) {
-    let startDate = task.task_start_date.split(' ');
-    startDate = startDate[0] + ' ' + startDate[1] + ' ' + startDate[2] + ' ' + startDate[3];
+    let startDate = this.format_date_show(task.task_start_date);
     
-    let endDate = task.task_end_date.split(' ');
-    endDate = endDate[0] + ' ' + endDate[1] + ' ' + endDate[2] + ' ' + endDate[3]
+    let endDate = this.format_date_show(task.task_end_date);
 
     return task.task_title + ' ' + startDate + ' - ' + endDate
   }

@@ -46,11 +46,45 @@
         <ion-item *ngFor="let task of undoneTasks">
           <ion-item-sliding>
             <ion-item-options side="start">
-              <ion-item-option (click)="editTask(task.task_id)" color="warning">
+              <ion-item-option (click)="editTask(task, true)" color="warning">
                 <ion-icon slot="start" name="build-outline"></ion-icon>
                 ویرایش
               </ion-item-option>
             </ion-item-options>
+            <ion-modal [isOpen]="openEditModals.includes(task)">
+              <ng-template>
+                <ion-header>
+                  <ion-toolbar>
+                    <ion-title>ویرایش</ion-title>
+                    <ion-buttons slot="end">
+                      <ion-button (click)="editTask(task, false)">بستن</ion-button>
+                    </ion-buttons>
+                  </ion-toolbar>
+                </ion-header>
+                <ion-content class="ion-padding">
+                  <form (ngSubmit)="editTaskSubmit(task.task_id)">
+                    <ion-input name="titleEdit" label="عنوان: " value="{{ task.task_title }}" [(ngModel)]="formEdit.value.titleEdit"></ion-input>
+                    <ion-input name="descriptionEdit" label="توضیحات: " value="{{ task.task_desc }}" [(ngModel)]="formEdit.value.descriptionEdit"></ion-input>
+                    
+                    <ion-input name="startDateEdit" id="start-date-edit" label="تاریخ شروع: " value="{{ formEdit.value.startDateEdit != null || formEdit.value.startDateEdit != undefined ? formEdit.value.startDateEdit.split('T')[0] : '' }}"></ion-input>
+                    <ion-popover trigger="start-date-edit" >
+                        <ng-template>
+                          <ion-datetime [(ngModel)]="formEdit.value.startDateEdit" [ngModelOptions]="{standalone: true}" presentation="date" locale="en-US" [showDefaultButtons]="true" [(ngModel)]="formEdit.value.startDateEdit"></ion-datetime>
+                        </ng-template>
+                    </ion-popover>
+
+                    <ion-input name="endDateEdit" id="end-date-edit" label="تاریخ پایان: " value="{{ formEdit.value.endDateEdit != null || formEdit.value.endDateEdit != undefined ? formEdit.value.endDateEdit.split('T')[0] : '' }}"></ion-input>
+                    <ion-popover trigger="end-date-edit" >
+                        <ng-template>
+                            <ion-datetime [(ngModel)]="formEdit.value.endDateEdit" [ngModelOptions]="{standalone: true}" presentation="date" locale="en-US" [showDefaultButtons]="true"></ion-datetime>
+                        </ng-template>
+                    </ion-popover>
+
+                    <ion-button type="submit">ذخیره</ion-button>
+                  </form>
+                </ion-content>
+              </ng-template>
+            </ion-modal>
         
             <ion-item (click)="setOpen(task.task_id, true)">
               <ion-label class="center">{{ format_task_show(task) }}</ion-label>
@@ -68,8 +102,8 @@
                 <ion-content class="ion-padding">
                   <h6>عنوان: {{ task.task_title }}</h6>
                   <h6>توضیحات: {{ task.task_desc }}</h6>
-                  <h6>تاریخ شروع: {{ task.task_start_date.split(' ')[0] + ' ' + task.task_start_date.split(' ')[1] + ' ' + task.task_start_date.split(' ')[2] + ' ' + task.task_start_date.split(' ')[3] }}</h6>
-                  <h6>تاریخ پایان: {{ task.task_end_date.split(' ')[0] + ' ' + task.task_end_date.split(' ')[1] + ' ' + task.task_end_date.split(' ')[2] + ' ' + task.task_end_date.split(' ')[3] }}</h6>
+                  <h6>تاریخ شروع: {{ format_date_show(task.task_start_date) }}</h6>
+                  <h6>تاریخ پایان: {{ format_date_show(task.task_end_date) }}</h6>
                   <h6>وضعیت: انجام نشده</h6>
                 </ion-content>
               </ng-template>
