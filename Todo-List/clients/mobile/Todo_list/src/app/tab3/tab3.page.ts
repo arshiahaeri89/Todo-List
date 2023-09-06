@@ -45,11 +45,11 @@ export class Tab3Page {
     this.getDoneTasks()
   }
 
-  setOpen(task_id: number, isOpen: boolean) {
+  setOpen(taskId: number, isOpen: boolean) {
     if(isOpen) {
-      this.openModals.push(task_id);
+      this.openModals.push(taskId);
     } else {      
-      delete this.openModals[this.openModals.indexOf(task_id)];
+      this.openModals.splice(this.openModals.indexOf(taskId), 1);
     }
   }
 

@@ -71,7 +71,7 @@ export class Tab2Page {
     if(isOpen) {
       this.openModals.push(taskId);
     } else {      
-      delete this.openModals[this.openModals.indexOf(taskId)];
+      this.openModals.splice(this.openModals.indexOf(taskId), 1);
     }
   }
 
